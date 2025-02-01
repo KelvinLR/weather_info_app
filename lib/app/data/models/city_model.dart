@@ -4,7 +4,7 @@ class CityModel {
   final String timeZone;
   final String timeZoneAbbreviation;
   final double elevation;
-  final Map<String, dynamic> currentInformation;
+  //final Map<String, dynamic> currentInformation;
   //final List<DailyWeatherModel> dailyInformation;
 
   const CityModel({
@@ -13,18 +13,16 @@ class CityModel {
     required this.timeZone,
     required this.timeZoneAbbreviation,
     required this.elevation,
-    required this.currentInformation,
+    //required this.currentInformation,
     //required this.dailyInformation,
   });
 
-  factory CityModel.fromJson(Map<String, dynamic> json) {
+  factory CityModel.fromMap(Map<String, dynamic> map) {
     return CityModel(
-        latitude: json['latitude'],
-        longitude: json['longitude'],
-        timeZone: json['timezone'],
-        timeZoneAbbreviation: json['timezone_abbreviation'],
-        elevation: json['elevation'],
-        currentInformation: json['current']);
-    //dailyInformation: json['daily']);
+        latitude: map['latitude'],
+        longitude: map['longitude'],
+        timeZone: map['timezone'],
+        timeZoneAbbreviation: map['timezone_abbreviation'],
+        elevation: map['elevation']);
   }
 }

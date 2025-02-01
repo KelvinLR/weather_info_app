@@ -14,4 +14,14 @@ class CurrentWeatherModel {
     required this.precipitation,
     required this.windSpeed,
   });
+
+  factory CurrentWeatherModel.fromMap(Map<String, dynamic> map) {
+    return CurrentWeatherModel(
+        currentTemperature: map['temperature_2m'],
+        relativeHumidity: map['relative_humidity_2m'],
+        apparentTemperature: map['apparent_temperature'],
+        isDay: map['is_day'],
+        precipitation: map['precipitation'],
+        windSpeed: map['wind_speed_10m']);
+  }
 }
