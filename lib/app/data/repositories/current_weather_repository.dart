@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:lapisco_challenge/app/data/http/exceptions.dart';
 import 'package:lapisco_challenge/app/data/http/http_client.dart';
 import 'package:lapisco_challenge/app/data/models/current_weather_model.dart';
@@ -24,12 +23,13 @@ class CurrentWeatherRepository implements CurrentWeatherInterface {
       final body = jsonDecode(response.body);
 
       return CurrentWeatherModel(
-          currentTemperature: body['temperature_2m'],
-          relativeHumidity: body['relative_humidity_2m'],
-          apparentTemperature: body['apparent_temperature'],
-          isDay: body['is_day'],
-          precipitation: body['precipitation'],
-          windSpeed: body['wind_speed_10m']);
+        currentTemperature: body['current']['temperature_2m'] ?? 0.0,
+        relativeHumidity: body['current']['relative_humidity_2m'] ?? 0,
+        apparentTemperature: body['current']['apparent_temperature'] ?? 0.0,
+        isDay: body['current']['is_day'] ?? 0,
+        precipitation: body['current']['precipitation'] ?? 0,
+        windSpeed: body['current']['wind_speed_10m'] ?? 0.0,
+      );
     } else if (response.statusCode == 404) {
       throw NotFoundException('Invalid URL');
     } else {
