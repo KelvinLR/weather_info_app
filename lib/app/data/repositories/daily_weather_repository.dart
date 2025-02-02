@@ -24,10 +24,13 @@ class DailyWeatherRepository implements DailyWeatherInterface {
       final body = jsonDecode(response.body);
 
       return DailyWeatherModel(
-        minTemperature: body['temperature_2m'],
-        maxTemperature: body['relative_humidity_2m'],
-        maxUvIndex: body['apparent_temperature'],
-        windSpeed: body['is_day'],
+        days: List<String>.from(body['daily']['time'] ?? []),
+        maxTemperature:
+            List<double>.from(body['daily']['temperature_2m_max'] ?? []),
+        minTemperature:
+            List<double>.from(body['daily']['temperature_2m_min'] ?? []),
+        maxUvIndex: List<double>.from(body['daily']['uv_index_max'] ?? []),
+        windSpeed: List<double>.from(body['daily']['wind_speed_10m_max'] ?? []),
       );
     } else if (response.statusCode == 404) {
       throw NotFoundException('Invalid URL');
