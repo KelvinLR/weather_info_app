@@ -4,11 +4,13 @@ import 'package:lapisco_challenge/app/ui/widgets/forecast_graph/bar_data.dart';
 
 class CustomBarChart extends StatelessWidget {
   final List weeklySummary;
+  final String title;
   final double maxY;
   final double minY;
   const CustomBarChart(
       {super.key,
       required this.weeklySummary,
+      required this.title,
       required this.maxY,
       required this.minY});
 
@@ -25,31 +27,65 @@ class CustomBarChart extends StatelessWidget {
     );
 
     myBarData.initializeBarData();
-    return BarChart(
-      BarChartData(
-        minY: minY,
-        maxY: maxY,
-        gridData: const FlGridData(show: false),
-        borderData: FlBorderData(show: false),
-        titlesData: const FlTitlesData(
-            show: true,
-            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            bottomTitles: AxisTitles(sideTitles: SideTitles())),
-        barGroups: myBarData.barData
-            .map(
-              (data) => BarChartGroupData(
-                x: data.x,
-                barRods: [
-                  BarChartRodData(
-                      toY: data.y,
-                      color: (data.y >= 0.0) ? Colors.orange : Colors.blue)
-                ],
+    return Column(
+      spacing: 16,
+      children: [
+        Text(
+          title,
+          style:  const TextStyle(
+            color: Color(0xFFFFFFFF),
+            fontWeight: FontWeight.bold
+          ),
+          textAlign: TextAlign.center,
+        ),
+        Expanded(
+          flex: 3,
+          child: BarChart(
+            BarChartData(
+              minY: minY,
+              maxY: maxY,
+              gridData: const FlGridData(show: false),
+              borderData: FlBorderData(show: false),
+              titlesData: const FlTitlesData(
+                show: true,
+                topTitles: AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
+                rightTitles: AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
+                bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(),
+                ),
               ),
-            )
-            .toList(),
-      ),
+              barGroups: myBarData.barData
+                  .map(
+                    (data) => BarChartGroupData(
+                      x: data.x,
+                      barRods: [
+                        BarChartRodData(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          width: 16,
+                          toY: data.y,
+                          color: (data.y >= 0.0) ? Colors.orange : Colors.blue,
+
+                          // gradient: LinearGradient(colors: colors)
+                        )
+                      ],
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ),
+        Container(
+          height: 20,
+        )
+      ],
     );
   }
 }
