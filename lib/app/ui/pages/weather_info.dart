@@ -17,9 +17,21 @@ class WeatherInfoPage extends StatelessWidget {
     double deviceWidth = MediaQuery.sizeOf(context).width;
     double deviceHeight = MediaQuery.sizeOf(context).height;
 
-    return BlocProvider(
+    return BlocProvider<CitySearchBloc>(
       create: (context) => CitySearchBloc(),
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: const Color(0xFF08244F),
+          child: const Icon(
+            Icons.location_city,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            context
+                .read<CitySearchBloc>()
+                .add(SearchCurrentLocationDataEvent());
+          },
+        ),
         body: DecoratedBox(
           decoration: BoxDecoration(
             gradient:
@@ -50,7 +62,7 @@ class WeatherInfoPage extends StatelessWidget {
               Builder(builder: (context) {
                 return Padding(
                   padding: EdgeInsets.only(
-                    top: deviceHeight * (44 / 858),
+                    top: deviceHeight * (64 / 858),
                     left: deviceWidth * (41 / 423),
                     right: deviceWidth * (41 / 423),
                   ),
@@ -135,7 +147,7 @@ class WeatherInfoPage extends StatelessWidget {
                         ),
                         WeeklySummaryCard(customBarChartList: [
                           CustomBarChart(
-                            title: "Max temperature (Last 7 days)",
+                            title: "Max temperature - Last 7 days",
                             weeklySummary:
                                 state.dailyWeatherData.maxTemperature,
                             minY: state.dailyWeatherData.maxTemperature.reduce(
@@ -144,7 +156,7 @@ class WeatherInfoPage extends StatelessWidget {
                                 (curr, next) => curr > next ? curr : next),
                           ),
                           CustomBarChart(
-                            title: "Min temperature (Last 7 days)",
+                            title: "Min temperature - Last 7 days",
                             weeklySummary:
                                 state.dailyWeatherData.minTemperature,
                             minY: state.dailyWeatherData.minTemperature.reduce(
