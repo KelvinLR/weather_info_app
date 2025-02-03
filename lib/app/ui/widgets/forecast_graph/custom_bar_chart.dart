@@ -30,13 +30,16 @@ class CustomBarChart extends StatelessWidget {
     return Column(
       spacing: 16,
       children: [
-        Text(
-          title,
-          style:  const TextStyle(
-            color: Color(0xFFFFFFFF),
-            fontWeight: FontWeight.bold
+        Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            title,
+            style:  const TextStyle(
+              color: Color(0xFFFFFFFF),
+              fontWeight: FontWeight.bold
+            ),
+            textAlign: TextAlign.right,
           ),
-          textAlign: TextAlign.center,
         ),
         Expanded(
           flex: 3,
