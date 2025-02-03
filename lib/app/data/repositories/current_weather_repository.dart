@@ -17,7 +17,7 @@ class CurrentWeatherRepository implements CurrentWeatherInterface {
       double latitude, double longitude) async {
     final response = await client.get(
       url:
-          'https://api.open-meteo.com/v1/forecast?latitude=$latitude&longitude=$longitude&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,is_day,precipitation,wind_speed_10m&',
+          'https://api.open-meteo.com/v1/forecast?latitude=$latitude&longitude=$longitude&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,is_day,precipitation,uv_index,wind_speed_10m&',
     );
 
     if (response.statusCode == 200) {
@@ -28,6 +28,7 @@ class CurrentWeatherRepository implements CurrentWeatherInterface {
         relativeHumidity: body['current']['relative_humidity_2m'] ?? 0,
         apparentTemperature: body['current']['apparent_temperature'] ?? 0.0,
         weatherCode: body['current']['weather_code'] ?? 0,
+        uvIndex: body['current']['uv_index'] ?? 0.0,
         isDay: body['current']['is_day'] ?? 0,
         precipitation: body['current']['precipitation'] ?? 0,
         windSpeed: body['current']['wind_speed_10m'] ?? 0.0,
