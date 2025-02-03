@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:geocoding/geocoding.dart';
 import 'package:lapisco_challenge/app/data/http/exceptions.dart';
 import 'package:lapisco_challenge/app/data/http/http_client.dart';
@@ -6,11 +7,29 @@ import 'package:lapisco_challenge/app/data/models/city_model.dart';
 
 abstract class CityRepositoryInterface {
   Future<CityModel> getCityInformation(double latitude, double longitude);
+  Future<List<Location>> fetchLocation(String address, {int retries = 3});
 }
 
 class CityRepository implements CityRepositoryInterface {
   final HttpClientInterface client;
   CityRepository({required this.client});
+
+  @override
+  Future<List<Location>> fetchLocation(String address,
+      {int retries = 3}) async {
+    for (int attempt = 1; attempt <= retries; attempt++) {
+      try {
+        return await locationFromAddress(address);
+      } catch (e) {
+        log("Tentativa $attempt falhou: $e");
+        if (attempt == retries) {
+          rethrow;
+        }
+        await Future.delayed(const Duration(seconds: 2));
+      }
+    }
+    throw Exception("Falha ao buscar localização após $retries tentativas");
+  }
 
   @override
   Future<CityModel> getCityInformation(
