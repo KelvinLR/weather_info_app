@@ -4,7 +4,6 @@ import 'package:lapisco_challenge/app/data/blocs/city_search/city_search_bloc.da
 import 'package:lapisco_challenge/app/ui/pages/weather_info.dart';
 
 void main() {
-  
   runApp(BlocProvider<CitySearchBloc>( // Provider at the root of your app
       create: (context) => CitySearchBloc(),
       child: const MainApp(),
