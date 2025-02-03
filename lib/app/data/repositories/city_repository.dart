@@ -26,7 +26,7 @@ class CityRepository implements CityRepositoryInterface {
           await placemarkFromCoordinates(latitude, longitude);
 
       return CityModel(
-        name: locationInfo.first.locality ?? "",
+        name: locationInfo.first.subAdministrativeArea ?? "",
         latitude: body['latitude'],
         longitude: body['longitude'],
         timeZone: body['timezone'],
