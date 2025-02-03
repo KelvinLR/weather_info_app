@@ -1,8 +1,9 @@
 abstract class CitySearchEvent {}
 
 class SearchCityDataEvent extends CitySearchEvent {
-  final double latitude;
-  final double longitude;
+  final String localName;
 
-  SearchCityDataEvent({required this.latitude, required this.longitude});
+  SearchCityDataEvent({required this.localName});
 }
+
+class SearchCurrentLocationDataEvent extends CitySearchEvent {}
