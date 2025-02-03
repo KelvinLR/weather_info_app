@@ -7,6 +7,7 @@ environment:
   sdk: ^3.5.3
 
 dependencies:
+  carousel_slider: ^5.0.0
   fl_chart: ^0.70.2
   flutter:
     sdk: flutter
@@ -22,3 +23,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/weather_icons/
