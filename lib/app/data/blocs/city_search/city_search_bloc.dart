@@ -28,7 +28,7 @@ class CitySearchBloc extends Bloc<CitySearchEvent, CitySearchState> {
       SearchCityDataEvent event, Emitter<CitySearchState> emit) async {
     emit(CityDataLoading());
 
-    List<Location> local = await locationFromAddress(event.localName);
+    List<Location> local = await cityRepository.fetchLocation(event.localName);
 
     final cityData = await cityRepository.getCityInformation(
         local.first.latitude, local.first.longitude);
@@ -50,7 +50,7 @@ class CitySearchBloc extends Bloc<CitySearchEvent, CitySearchState> {
     emit(CityDataLoading());
 
     var ipAddress = IpAddress(type: RequestType.json);
-    var deviceIpAddress = await ipAddress.getIpAddress();
+    var deviceIpAddress = (await ipAddress.getIpAddress())["ip"];
     final currentLocationData =
         await currentLocationRepository.getCurrentLocation(deviceIpAddress);
 
