@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lapisco_challenge/app/data/blocs/city_search/city_search_state.dart';
 import 'package:lapisco_challenge/app/data/blocs/city_search/city_search_bloc.dart';
 import 'package:lapisco_challenge/app/data/blocs/city_search/city_search_event.dart';
+import 'package:lapisco_challenge/app/ui/widgets/detailed_card/detailed_card.dart';
 import 'package:lapisco_challenge/app/ui/widgets/forecast_graph/custom_bar_chart.dart';
+import 'package:lapisco_challenge/app/ui/widgets/weather_code/weather_code.dart';
 import 'package:lapisco_challenge/app/ui/widgets/weekly_summary_card/weekly_summary_card.dart';
 
 class WeatherInfoPage extends StatelessWidget {
@@ -19,17 +21,29 @@ class WeatherInfoPage extends StatelessWidget {
       create: (context) => CitySearchBloc(),
       child: Scaffold(
         body: DecoratedBox(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFF08244F),
-                Color(0xFF134CB5),
-                Color(0xFF0B42AB),
-              ],
-              stops: [0, 0.47, 1.00],
-              begin: FractionalOffset(0.0, 0.0),
-              end: FractionalOffset(1.0, 1.0),
-            ),
+          decoration: BoxDecoration(
+            gradient:
+                (MediaQuery.of(context).platformBrightness == Brightness.dark)
+                    ? const LinearGradient(
+                        colors: [
+                          Color(0xFF08244F),
+                          Color(0xFF134CB5),
+                          Color(0xFF0B42AB),
+                        ],
+                        stops: [0, 0.47, 1.00],
+                        begin: FractionalOffset(0.0, 0.0),
+                        end: FractionalOffset(1.0, 1.0),
+                      )
+                    : const LinearGradient(
+                        colors: [
+                          Color(0xFF29B2DD),
+                          Color(0xFF33AADD),
+                          Color(0xFF2DC8EA),
+                        ],
+                        stops: [0, 0.47, 1.00],
+                        begin: FractionalOffset(0.0, 0.0),
+                        end: FractionalOffset(1.0, 1.0),
+                      ),
           ),
           child: Column(
             children: [
@@ -63,45 +77,65 @@ class WeatherInfoPage extends StatelessWidget {
                   ),
                 );
               }),
+              Container(
+                height: deviceHeight * (31 / 858),
+              ),
               BlocBuilder<CitySearchBloc, CitySearchState>(
                 builder: (context, state) {
                   if (state is CityDataLoading) {
                     return const CircularProgressIndicator();
                   } else if (state is CityDataLoaded) {
                     return Column(
+                      spacing: 1,
                       children: [
-                        /*Text(state.cityData.name),
-                        Text("${state.cityData.latitude}"),
-                        Text("${state.cityData.longitude}"),
-                        Text("${state.cityData.elevation}"),
-                        Text("${state.currentWeatherData.apparentTemperature}"),
-                        Text("${state.currentWeatherData.currentTemperature}"),
-                        Text("${state.currentWeatherData.windSpeed}"),
-                        Text("${state.currentWeatherData.precipitation}"),
-                        Text("${state.currentWeatherData.isDay}"),
-                        Text("${state.currentWeatherData.relativeHumidity}"),
-                        Text("${state.dailyWeatherData.days}"),
-                        Text("${state.dailyWeatherData.maxTemperature}"),
-                        Text("${state.dailyWeatherData.minTemperature}"),
-                        Text("${state.dailyWeatherData.maxUvIndex}"),
-                        Text("${state.dailyWeatherData.windSpeed}"),*/
                         Text(
                           state.cityData.name,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(
+                              fontSize: 20, color: Color(0xFFFFFFFF)),
                         ),
+                        WeatherCode(
+                            weatherCode: state.currentWeatherData.weatherCode),
                         Text(
-                            "currentTemperature: ${state.currentWeatherData.currentTemperature} °C"),
-                        Text(
-                            "apparentTemperature: ${state.currentWeatherData.apparentTemperature} °C"),
-                        Text(
-                            "windSpeed: ${state.currentWeatherData.windSpeed} km/h"),
-                        Text(
-                            "precipitation: ${state.currentWeatherData.precipitation} mm"),
-                        Text(
-                            "weatherCode: ${state.currentWeatherData.weatherCode}"),
-                        const Text('Last 7 days average temperature'),
-                        WeeklySummaryCard(
-                          customBarChart: CustomBarChart(
+                          "${state.currentWeatherData.currentTemperature} °C",
+                          style: const TextStyle(
+                            fontSize: 64,
+                            color: Color(0xFFFFFFFF),
+                          ),
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            text: "Apparent temperature ",
+                            style: const TextStyle(
+                              color: Color(0xFFFFFFFF),
+                              fontWeight: FontWeight.bold,
+                            ),
+                            children: [
+                              TextSpan(
+                                text:
+                                    "${state.currentWeatherData.apparentTemperature} °C",
+                                style: const TextStyle(
+                                  color: Color(0xFFFFFFFF),
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: deviceHeight * (10 / 858),
+                        ),
+                        DetailedCard(
+                          currentUvIndex: state.currentWeatherData.uvIndex,
+                          currentWindSpeed: state.currentWeatherData.windSpeed,
+                          relativeHumidity:
+                              state.currentWeatherData.relativeHumidity,
+                        ),
+                        Container(
+                          height: deviceHeight * (20 / 858),
+                        ),
+                        WeeklySummaryCard(customBarChartList: [
+                          CustomBarChart(
+                            title: "Max temperature (Last 7 days)",
                             weeklySummary:
                                 state.dailyWeatherData.maxTemperature,
                             minY: state.dailyWeatherData.maxTemperature.reduce(
@@ -109,7 +143,16 @@ class WeatherInfoPage extends StatelessWidget {
                             maxY: state.dailyWeatherData.maxTemperature.reduce(
                                 (curr, next) => curr > next ? curr : next),
                           ),
-                        )
+                          CustomBarChart(
+                            title: "Min temperature (Last 7 days)",
+                            weeklySummary:
+                                state.dailyWeatherData.minTemperature,
+                            minY: state.dailyWeatherData.minTemperature.reduce(
+                                (curr, next) => curr < next ? curr : next),
+                            maxY: state.dailyWeatherData.minTemperature.reduce(
+                                (curr, next) => curr > next ? curr : next),
+                          ),
+                        ])
                       ],
                     );
                   } else if (state is CityDataError) {
