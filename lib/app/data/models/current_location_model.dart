@@ -1,4 +1,4 @@
-class CurrentLocationModel {
+/*class CurrentLocationModel {
   final String cityName;
   final String region;
   final String country;
@@ -22,4 +22,4 @@ class CurrentLocationModel {
       longitude: map['longitude'],
     );
   }
-}
+}*/
