@@ -67,6 +67,7 @@ class WeatherInfoPage extends StatelessWidget {
                     right: deviceWidth * (41 / 423),
                   ),
                   child: TextField(
+                    style: const TextStyle(color: Colors.white),
                     cursorColor: Colors.white,
                     controller: controller,
                     decoration: InputDecoration(
@@ -127,7 +128,7 @@ class WeatherInfoPage extends StatelessWidget {
                         Text(
                           state.cityData.name,
                           style: const TextStyle(
-                              fontSize: 20, color: Color(0xFFFFFFFF)),
+                              fontSize: 20, color: Colors.white),
                         ),
                         WeatherCode(
                             weatherCode: state.currentWeatherData.weatherCode),
@@ -135,7 +136,7 @@ class WeatherInfoPage extends StatelessWidget {
                           "${state.currentWeatherData.currentTemperature.toStringAsFixed(0)}°",
                           style: const TextStyle(
                             fontSize: 64,
-                            color: Color(0xFFFFFFFF),
+                            color: Colors.white,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -143,7 +144,7 @@ class WeatherInfoPage extends StatelessWidget {
                           text: TextSpan(
                             text: "Apparent temperature ",
                             style: const TextStyle(
-                              color: Color(0xFFFFFFFF),
+                              color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
                             children: [
@@ -151,7 +152,7 @@ class WeatherInfoPage extends StatelessWidget {
                                 text:
                                     "${state.currentWeatherData.apparentTemperature.toStringAsFixed(0)}°",
                                 style: const TextStyle(
-                                  color: Color(0xFFFFFFFF),
+                                  color: Colors.white,
                                   fontWeight: FontWeight.normal,
                                 ),
                               )
