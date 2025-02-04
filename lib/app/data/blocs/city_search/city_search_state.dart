@@ -18,3 +18,5 @@ class CityDataLoaded extends CitySearchState {
 }
 
 class CityDataError extends CitySearchState {}
+
+class CurrentLocationError extends CitySearchState {}
