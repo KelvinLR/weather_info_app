@@ -44,7 +44,7 @@ pubspec.yaml
 ```
 flutter pub get
 ```
-**2.** Conecte um dispositivo Android ou iOS
+**2.** Conecte um dispositivo Android ou iOS <br>
 **3.** Rode a aplicação com o comando abaixo
 ```
 flutter run
