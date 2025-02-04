@@ -24,12 +24,12 @@ class BarData {
   void initializeBarData() {
     barData = [
       IndividualBar(x: 0, y: firstDayData),
-      IndividualBar(x: 0, y: secondDayData),
-      IndividualBar(x: 0, y: thirdDayData),
-      IndividualBar(x: 0, y: fourthDayData),
-      IndividualBar(x: 0, y: fifthDayData),
-      IndividualBar(x: 0, y: sixthDayData),
-      IndividualBar(x: 0, y: seventhDayData),
+      IndividualBar(x: 1, y: secondDayData),
+      IndividualBar(x: 2, y: thirdDayData),
+      IndividualBar(x: 3, y: fourthDayData),
+      IndividualBar(x: 4, y: fifthDayData),
+      IndividualBar(x: 5, y: sixthDayData),
+      IndividualBar(x: 6, y: seventhDayData),
     ];
   }
 }
