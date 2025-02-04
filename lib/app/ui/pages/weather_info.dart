@@ -20,6 +20,7 @@ class WeatherInfoPage extends StatelessWidget {
     return BlocProvider<CitySearchBloc>(
       create: (context) => CitySearchBloc(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         floatingActionButton: FloatingActionButton(
           backgroundColor: const Color(0xFF08244F),
           child: const Icon(
