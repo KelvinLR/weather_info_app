@@ -34,10 +34,8 @@ class CustomBarChart extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: Text(
             title,
-            style:  const TextStyle(
-              color: Color(0xFFFFFFFF),
-              fontWeight: FontWeight.bold
-            ),
+            style: const TextStyle(
+                color: Color(0xFFFFFFFF), fontWeight: FontWeight.bold),
             textAlign: TextAlign.right,
           ),
         ),
@@ -49,19 +47,40 @@ class CustomBarChart extends StatelessWidget {
               maxY: maxY,
               gridData: const FlGridData(show: false),
               borderData: FlBorderData(show: false),
-              titlesData: const FlTitlesData(
+              titlesData: FlTitlesData(
                 show: true,
-                topTitles: AxisTitles(
+                topTitles: const AxisTitles(
                   sideTitles: SideTitles(showTitles: false),
                 ),
-                rightTitles: AxisTitles(
+                rightTitles: const AxisTitles(
                   sideTitles: SideTitles(showTitles: false),
                 ),
-                leftTitles: AxisTitles(
+                leftTitles: const AxisTitles(
                   sideTitles: SideTitles(showTitles: false),
                 ),
                 bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(),
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    getTitlesWidget: (value, meta) {
+                      int index = value.toInt();
+
+                      if (index < 0 || index >= weeklySummary.length) {
+                        return const SizedBox.shrink();
+                      }
+
+                      double temperature = weeklySummary[index];
+
+                      return SideTitleWidget(
+                        meta: meta,
+                        child: Text(
+                          '${temperature.toStringAsFixed(0)}°C',
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 12),
+                        ),
+                      );
+                    },
+                    reservedSize: 30,
+                  ),
                 ),
               ),
               barGroups: myBarData.barData
@@ -75,8 +94,6 @@ class CustomBarChart extends StatelessWidget {
                           width: 16,
                           toY: data.y,
                           color: (data.y >= 0.0) ? Colors.orange : Colors.blue,
-
-                          // gradient: LinearGradient(colors: colors)
                         )
                       ],
                     ),
@@ -85,9 +102,6 @@ class CustomBarChart extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          height: 20,
-        )
       ],
     );
   }
