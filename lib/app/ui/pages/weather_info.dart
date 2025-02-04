@@ -17,203 +17,213 @@ class WeatherInfoPage extends StatelessWidget {
     double deviceWidth = MediaQuery.sizeOf(context).width;
     double deviceHeight = MediaQuery.sizeOf(context).height;
 
-    return BlocProvider<CitySearchBloc>(
-      create: (context) => CitySearchBloc(),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color(0xFF08244F),
-          child: const Icon(
-            Icons.my_location_rounded,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            context
-                .read<CitySearchBloc>()
-                .add(SearchCurrentLocationDataEvent());
-          },
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFF08244F),
+        child: const Icon(
+          Icons.my_location_rounded,
+          color: Colors.white,
         ),
-        body: DecoratedBox(
-          decoration: BoxDecoration(
-            gradient:
-                (MediaQuery.of(context).platformBrightness == Brightness.dark)
-                    ? const LinearGradient(
-                        colors: [
-                          Color(0xFF08244F),
-                          Color(0xFF134CB5),
-                          Color(0xFF0B42AB),
-                        ],
-                        stops: [0, 0.47, 1.00],
-                        begin: FractionalOffset(0.0, 0.0),
-                        end: FractionalOffset(1.0, 1.0),
-                      )
-                    : const LinearGradient(
-                        colors: [
-                          Color(0xFF29B2DD),
-                          Color(0xFF33AADD),
-                          Color(0xFF2DC8EA),
-                        ],
-                        stops: [0, 0.47, 1.00],
-                        begin: FractionalOffset(0.0, 0.0),
-                        end: FractionalOffset(1.0, 1.0),
-                      ),
-          ),
-          child: Column(
-            children: [
-              Builder(builder: (context) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                    top: deviceHeight * (64 / 858),
-                    left: deviceWidth * (41 / 423),
-                    right: deviceWidth * (41 / 423),
-                  ),
-                  child: TextField(
-                    style: const TextStyle(color: Colors.white),
-                    cursorColor: Colors.white,
-                    controller: controller,
-                    decoration: InputDecoration(
-                      icon: const Icon(
-                        Icons.search_rounded,
+        onPressed: () {
+          context.read<CitySearchBloc>().add(SearchCurrentLocationDataEvent());
+        },
+      ),
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient:
+              (MediaQuery.of(context).platformBrightness == Brightness.dark)
+                  ? const LinearGradient(
+                      colors: [
+                        Color(0xFF08244F),
+                        Color(0xFF134CB5),
+                        Color(0xFF0B42AB),
+                      ],
+                      stops: [0, 0.47, 1.00],
+                      begin: FractionalOffset(0.0, 0.0),
+                      end: FractionalOffset(1.0, 1.0),
+                    )
+                  : const LinearGradient(
+                      colors: [
+                        Color(0xFF29B2DD),
+                        Color(0xFF33AADD),
+                        Color(0xFF2DC8EA),
+                      ],
+                      stops: [0, 0.47, 1.00],
+                      begin: FractionalOffset(0.0, 0.0),
+                      end: FractionalOffset(1.0, 1.0),
+                    ),
+        ),
+        child: Column(
+          children: [
+            Builder(builder: (context) {
+              return Padding(
+                padding: EdgeInsets.only(
+                  top: deviceHeight * (64 / 858),
+                  left: deviceWidth * (41 / 423),
+                  right: deviceWidth * (41 / 423),
+                ),
+                child: TextField(
+                  style: const TextStyle(color: Colors.white),
+                  cursorColor: Colors.white,
+                  controller: controller,
+                  decoration: InputDecoration(
+                    icon: const Icon(
+                      Icons.search_rounded,
+                      color: Colors.white,
+                    ),
+                    hintText: "Enter a location",
+                    hintStyle: const TextStyle(color: Colors.white),
+                    focusColor: Colors.white,
+                    hoverColor: Colors.white,
+                    filled: false,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        width: 0.8,
+                        style: BorderStyle.solid,
                         color: Colors.white,
                       ),
-                      hintText: "Enter a location",
-                      hintStyle: const TextStyle(color: Colors.white),
-                      focusColor: Colors.white,
-                      hoverColor: Colors.white,
-                      filled: false,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          width: 0.8,
-                          style: BorderStyle.solid,
-                          color: Colors.white,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          width: 0.8,
-                          style: BorderStyle.solid,
-                          color: Colors.white,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          width: 0.8,
-                          style: BorderStyle.solid,
-                          color: Colors.white,
-                        ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        width: 0.8,
+                        style: BorderStyle.solid,
+                        color: Colors.white,
                       ),
                     ),
-                    onSubmitted: (value) {
-                      context
-                          .read<CitySearchBloc>()
-                          .add(SearchCityDataEvent(localName: value));
-                      controller.clear();
-                    },
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        width: 0.8,
+                        style: BorderStyle.solid,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                );
-              }),
-              Container(
-                height: deviceHeight * (31 / 858),
-              ),
-              BlocBuilder<CitySearchBloc, CitySearchState>(
-                builder: (context, state) {
-                  if (state is CityDataLoading) {
-                    return const Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        CircularProgressIndicator(
+                  onSubmitted: (value) {
+                    context
+                        .read<CitySearchBloc>()
+                        .add(SearchCityDataEvent(localName: value));
+                    controller.clear();
+                  },
+                ),
+              );
+            }),
+            Container(
+              height: deviceHeight * (31 / 858),
+            ),
+            BlocBuilder<CitySearchBloc, CitySearchState>(
+              builder: (context, state) {
+                if (state is CityDataLoading) {
+                  return const Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        "Loading forecast data",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  );
+                } else if (state is CityDataLoaded) {
+                  return Column(
+                    spacing: 1,
+                    children: [
+                      Text(
+                        state.cityData.name,
+                        textAlign: TextAlign.center,
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.white),
+                      ),
+                      WeatherCode(
+                          weatherCode: state.currentWeatherData.weatherCode),
+                      Text(
+                        "${state.currentWeatherData.currentTemperature.toStringAsFixed(0)}°",
+                        style: const TextStyle(
+                          fontSize: 64,
                           color: Colors.white,
+                          fontWeight: FontWeight.w500,
                         ),
-                        SizedBox(height: 8),
-                        Text(
-                          "Loading forecast data",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    );
-                  } else if (state is CityDataLoaded) {
-                    return Column(
-                      spacing: 1,
-                      children: [
-                        Text(
-                          state.cityData.name,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "Apparent temperature ",
                           style: const TextStyle(
-                              fontSize: 20, color: Colors.white),
-                        ),
-                        WeatherCode(
-                            weatherCode: state.currentWeatherData.weatherCode),
-                        Text(
-                          "${state.currentWeatherData.currentTemperature.toStringAsFixed(0)}°",
-                          style: const TextStyle(
-                            fontSize: 64,
                             color: Colors.white,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.bold,
                           ),
+                          children: [
+                            TextSpan(
+                              text:
+                                  "${state.currentWeatherData.apparentTemperature.toStringAsFixed(0)}°",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            )
+                          ],
                         ),
-                        RichText(
-                          text: TextSpan(
-                            text: "Apparent temperature ",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            children: [
-                              TextSpan(
-                                text:
-                                    "${state.currentWeatherData.apparentTemperature.toStringAsFixed(0)}°",
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              )
-                            ],
-                          ),
+                      ),
+                      Container(
+                        height: deviceHeight * (10 / 858),
+                      ),
+                      DetailedCard(
+                        currentUvIndex: state.currentWeatherData.uvIndex,
+                        currentWindSpeed: state.currentWeatherData.windSpeed,
+                        relativeHumidity:
+                            state.currentWeatherData.relativeHumidity,
+                      ),
+                      Container(
+                        height: deviceHeight * (20 / 858),
+                      ),
+                      WeeklySummaryCard(customBarChartList: [
+                        CustomBarChart(
+                          title: "Max temperature - Next 7 days",
+                          weeklySummary: state.dailyWeatherData.maxTemperature,
+                          minY: state.dailyWeatherData.maxTemperature.reduce(
+                              (curr, next) => curr < next ? curr : next),
+                          maxY: state.dailyWeatherData.maxTemperature.reduce(
+                              (curr, next) => curr > next ? curr : next),
                         ),
-                        Container(
-                          height: deviceHeight * (10 / 858),
+                        CustomBarChart(
+                          title: "Min temperature - Next 7 days",
+                          weeklySummary: state.dailyWeatherData.minTemperature,
+                          minY: state.dailyWeatherData.minTemperature.reduce(
+                              (curr, next) => curr < next ? curr : next),
+                          maxY: state.dailyWeatherData.minTemperature.reduce(
+                              (curr, next) => curr > next ? curr : next),
                         ),
-                        DetailedCard(
-                          currentUvIndex: state.currentWeatherData.uvIndex,
-                          currentWindSpeed: state.currentWeatherData.windSpeed,
-                          relativeHumidity:
-                              state.currentWeatherData.relativeHumidity,
-                        ),
-                        Container(
-                          height: deviceHeight * (20 / 858),
-                        ),
-                        WeeklySummaryCard(customBarChartList: [
-                          CustomBarChart(
-                            title: "Max temperature - Next 7 days",
-                            weeklySummary:
-                                state.dailyWeatherData.maxTemperature,
-                            minY: state.dailyWeatherData.maxTemperature.reduce(
-                                (curr, next) => curr < next ? curr : next),
-                            maxY: state.dailyWeatherData.maxTemperature.reduce(
-                                (curr, next) => curr > next ? curr : next),
-                          ),
-                          CustomBarChart(
-                            title: "Min temperature - Next 7 days",
-                            weeklySummary:
-                                state.dailyWeatherData.minTemperature,
-                            minY: state.dailyWeatherData.minTemperature.reduce(
-                                (curr, next) => curr < next ? curr : next),
-                            maxY: state.dailyWeatherData.minTemperature.reduce(
-                                (curr, next) => curr > next ? curr : next),
-                          ),
-                        ])
-                      ],
-                    );
-                  } else if (state is CityDataError) {
-                    return const Text("Search failed");
-                  }
-                  return Container();
-                },
-              )
-            ],
-          ),
+                      ])
+                    ],
+                  );
+                } else if (state is CityDataError) {
+                  return const Text(
+                    "Search failed, type a valid address",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  );
+                } else if (state is CurrentLocationError) {
+                  return const Text(
+                    "Turn on location permission on device settings",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  );
+                }
+                return Container();
+              },
+            )
+          ],
         ),
       ),
     );
