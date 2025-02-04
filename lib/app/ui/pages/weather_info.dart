@@ -67,16 +67,40 @@ class WeatherInfoPage extends StatelessWidget {
                     right: deviceWidth * (41 / 423),
                   ),
                   child: TextField(
+                    cursorColor: Colors.white,
                     controller: controller,
                     decoration: InputDecoration(
+                      icon: const Icon(
+                        Icons.search_rounded,
+                        color: Colors.white,
+                      ),
                       hintText: "Enter a location",
-                      filled: true,
-                      fillColor: const Color(0xFFFFFFFF),
+                      hintStyle: const TextStyle(color: Colors.white),
+                      focusColor: Colors.white,
+                      hoverColor: Colors.white,
+                      filled: false,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: const BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
+                          width: 0.8,
+                          style: BorderStyle.solid,
+                          color: Colors.white,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          width: 0.8,
+                          style: BorderStyle.solid,
+                          color: Colors.white,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          width: 0.8,
+                          style: BorderStyle.solid,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -108,10 +132,11 @@ class WeatherInfoPage extends StatelessWidget {
                         WeatherCode(
                             weatherCode: state.currentWeatherData.weatherCode),
                         Text(
-                          "${state.currentWeatherData.currentTemperature} °C",
+                          "${state.currentWeatherData.currentTemperature.toStringAsFixed(0)}°",
                           style: const TextStyle(
                             fontSize: 64,
                             color: Color(0xFFFFFFFF),
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         RichText(
@@ -124,7 +149,7 @@ class WeatherInfoPage extends StatelessWidget {
                             children: [
                               TextSpan(
                                 text:
-                                    "${state.currentWeatherData.apparentTemperature} °C",
+                                    "${state.currentWeatherData.apparentTemperature.toStringAsFixed(0)}°",
                                 style: const TextStyle(
                                   color: Color(0xFFFFFFFF),
                                   fontWeight: FontWeight.normal,
@@ -147,7 +172,7 @@ class WeatherInfoPage extends StatelessWidget {
                         ),
                         WeeklySummaryCard(customBarChartList: [
                           CustomBarChart(
-                            title: "Max temperature - Last 7 days",
+                            title: "Max temperature - Next 7 days",
                             weeklySummary:
                                 state.dailyWeatherData.maxTemperature,
                             minY: state.dailyWeatherData.maxTemperature.reduce(
@@ -156,7 +181,7 @@ class WeatherInfoPage extends StatelessWidget {
                                 (curr, next) => curr > next ? curr : next),
                           ),
                           CustomBarChart(
-                            title: "Min temperature - Last 7 days",
+                            title: "Min temperature - Next 7 days",
                             weeklySummary:
                                 state.dailyWeatherData.minTemperature,
                             minY: state.dailyWeatherData.minTemperature.reduce(
