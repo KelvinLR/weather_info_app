@@ -120,7 +120,19 @@ class WeatherInfoPage extends StatelessWidget {
               BlocBuilder<CitySearchBloc, CitySearchState>(
                 builder: (context, state) {
                   if (state is CityDataLoading) {
-                    return const CircularProgressIndicator();
+                    return const Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          "Loading forecast data",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    );
                   } else if (state is CityDataLoaded) {
                     return Column(
                       spacing: 1,
