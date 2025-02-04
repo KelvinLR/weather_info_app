@@ -6,6 +6,18 @@ O app disponibiliza informações detalhadas a respeito do tempo atual, bem como
 
 A UI do aplicativo conta com possibilidade de modo claro e escuro, definido automaticamente de acordo com o tema do dispositivo onde está sendo utilizado.
 
+### 📸 Capturas de tela
+<br />
+<div>
+  &emsp;&emsp;&emsp;
+  <img src="https://lh3.google.com/u/0/d/1mqky0qEwyz_1z1RDJQYhIPDCR8T5A_t4=w1876-h1006-iv2" alt="Tema claro" width="330">
+  &emsp;&emsp;&emsp;&emsp;
+  <img src="https://lh3.google.com/u/0/d/1mqky0qEwyz_1z1RDJQYhIPDCR8T5A_t4=w1876-h1006-iv2" alt="Tema escuro" width="320">  
+</div>
+<br />
+
+<a href="https://www.figma.com/design/hCEiF64ZRfWonhmZuqwMLl/Weather-%7C-App-(Community)?node-id=401-7&t=jFyTFY2Fqms9T6vz-0" title="Weather">
+
 ### 📋 Objetivos principais
 - Retornar dados meteorológicos de acordo com a cidade pesquisada
     - Dados atuais: Temperatura, Índice UV, Velocidade do Vento
