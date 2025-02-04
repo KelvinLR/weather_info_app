@@ -85,18 +85,27 @@ class CustomBarChart extends StatelessWidget {
               ),
               barGroups: myBarData.barData
                   .map(
-                    (data) => BarChartGroupData(
-                      x: data.x,
-                      barRods: [
-                        BarChartRodData(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          width: 16,
-                          toY: data.y,
-                          color: (data.y >= 0.0) ? Colors.orange : Colors.blue,
-                        )
-                      ],
-                    ),
+                    (data) => BarChartGroupData(x: data.x, barRods: [
+                      BarChartRodData(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        width: 16,
+                        toY: data.y,
+                        gradient: (data.y >= 0.0)
+                            ? LinearGradient(
+                                colors: [
+                                  Colors.amber.shade700,
+                                  Colors.orange.shade900
+                                ],
+                              )
+                            : LinearGradient(
+                                colors: [
+                                  Colors.blue.shade700,
+                                  Colors.cyan.shade400
+                                ],
+                              ),
+                      )
+                    ]),
                   )
                   .toList(),
             ),
