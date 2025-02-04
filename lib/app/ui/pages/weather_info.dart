@@ -23,7 +23,7 @@ class WeatherInfoPage extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           backgroundColor: const Color(0xFF08244F),
           child: const Icon(
-            Icons.location_city,
+            Icons.my_location_rounded,
             color: Colors.white,
           ),
           onPressed: () {
