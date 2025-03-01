@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lapisco_challenge/app/data/blocs/city_search/city_search_bloc.dart';
 import 'package:lapisco_challenge/app/data/blocs/city_search/city_search_event.dart';
 import 'package:lapisco_challenge/app/ui/pages/weather_info.dart';
 
 void main() {
-  runApp(BlocProvider<CitySearchBloc>(
-      create: (context) => CitySearchBloc()..add(SearchCurrentLocationDataEvent()),
+  runApp(
+    BlocProvider<CitySearchBloc>(
+      create: (context) =>
+          CitySearchBloc()..add(SearchCurrentLocationDataEvent()),
       child: const MainApp(),
-    ),);
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -16,6 +20,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: WeatherInfoPage(),
